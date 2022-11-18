@@ -23,8 +23,16 @@ pattern <- argv$pattern
 output_path <- argv$output_path
 output_prefix <- argv$prefix
 
+# 测试用
+
+#path <- "."
+#pattern <- "*count$"
+#output_path <- "../"
+#output_prefix <- "my"
+
 # 代码主体
 file_name <- dir(path = path,pattern = pattern)
+if(is_empty(file_name)){stop("\nCould not find files with pattern of '",pattern,"'!")}
 file <- paste0(path,"/",file_name)
 # merge all count matrix
 df <- read.table(file[1], header = T,comment.char = "#") %>% select(c(1,6,7))
@@ -71,6 +79,6 @@ write.table(out_fpkm, file = fpkm_file,sep = "\t", col.names = TRUE, row.names =
 cat("writing out TPM\n")
 out_tpm <- tpm %>% rownames_to_column(var = "gene_id")
 tpm_file <- paste0(output_path,"/",output_prefix,"_","genes.tpm")
-write.table(tpm, file = tpm_file,sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
+write.table(out_tpm, file = tpm_file,sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 cat("Congratulations! All of the missions have been completed!\n")
