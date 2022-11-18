@@ -5,7 +5,7 @@ suppressMessages(library(dplyr))
 suppressMessages(library(tibble))
 suppressMessages(library(edgeR))
 suppressMessages(library(argparser)) #https://github.com/cran/argparser
-
+suppressMessages(library(purrr))
 
 # 参数设置
 p <- arg_parser("Merge featureCounts(linux version) and calculate FPKM/TPM")
