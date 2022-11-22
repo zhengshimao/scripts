@@ -207,6 +207,8 @@ Uniprot数据下目录 [Taxonomic divisions](https://ftp.uniprot.org/pub/databas
 
 脚本依赖的都是基础模块。如果输入文件是`.gz` 格式，在win上必须解压或者使用gitbash才能处理（因为调用了`zcat` 命令）。
 
+博客地址 [Uniprot数据库dat文件转换为fasta文件 - 学生信的大叔](https://zhengshimao.netlify.app/post/uniprot_dat2fasta.html)
+
 #### 版本升级
 
 ##### 2022.11.22 v0.2
@@ -260,4 +262,4 @@ perl dat2fa_swiss_prot.pl -i uniprot_sprot_plants.dat.gz -o output.fasta
 - -i 输入文件，是必需参数。允许解压后的dat文件，也允许gzip压缩的`.gz` 后缀文件。
 - -o 指定输出文件。如果未指定，则根据输入文件进行定义，且输出路径与输入文件相同。如果结果文件已经存在，则无法运行，必须更换或者删除输出文件名称。
 
-注意：脚本有部分内容（序列ID中的'sp|'）写死，只能用于[Taxonomic divisions](https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/taxonomic_divisions/) 下的uniprot_sprot文件`uniprot_sprot*.gz` ，不能用于 uniprot_trembl 文件【其实有网友测试了能转格式，但是】。
+注意：脚本有部分内容（序列ID中的'sp|'）写死，只能用于[Taxonomic divisions](https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/taxonomic_divisions/) 下的uniprot_sprot文件`uniprot_sprot*.gz` ，不能用于 uniprot_trembl 文件【其实有网友测试了能转格式，应该能用于注释，但是被我写死的`'sp|'` 部分确实不妥，你必须要保证自己备注好真实的数据库来源】。
