@@ -199,13 +199,22 @@ bash run_rename_sample.sh
 
 ```
 
-### uniprot_dat2fasta.pl
+### run_dat2fa_swiss_prot.pl
 
 这是一个perl脚本。
 
 Uniprot数据下目录 [Taxonomic divisions](https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/taxonomic_divisions/) 存放不同物种大类的`dat` 文件，但是没有`fasta` 文件，这里写了个脚本将该目录下的文件转为fasta格式。
 
-脚本依赖的都是基础模块。
+脚本依赖的都是基础模块。如果输入文件是`.gz` 格式，在win上必须解压或者使用gitbash才能处理（因为调用了`zcat` 命令）。
+
+#### 版本升级
+
+##### 2022.11.22 v0.2
+
+- 将脚本名称由原来的`dat2fa_swiss_prot.pl` 改为了`run_dat2fa_swiss_prot.pl` 
+- 新增了fasta结果信息文件`.info` 。将fasta序列标题行信息整理成了tab分隔的文件，方便处理。不过得多说一句，`.info` 文件只是提取了部分`.dat` 文件信息。
+- 修改了输出结果文件命名处理部分。原来的处理部分重复了；处理`.gz` 文件信息时在命名上也会带上`.gz`让我觉得别扭，也修改了。
+- 所有修改行在对应行标记了修改日期`2022.11.22` 以及修改的方式。
 
 #### FASTA序列信息注解
 
