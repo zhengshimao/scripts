@@ -8,7 +8,7 @@ function get_pwd(){
     echo $dir;
     cd $here ;
 elif test -f $1; then
-    here=$PWD;
+    #here=$PWD;
     tmp_file=`basename $1`;
     tmp_dir=`dirname $1`;
     cd $tmp_dir;
