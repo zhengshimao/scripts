@@ -211,7 +211,7 @@ Uniprot数据下目录 [Taxonomic divisions](https://ftp.uniprot.org/pub/databas
 
 #### 版本升级
 
-##### 2022.12.11 v0.3 【已转为非公kai脚本】
+##### 2022.12.11 v0.3 【已转为非公开脚本】
 
 - 添加脚本`run_dat2fa_uniprot.pl` ，原`run_dat2fa_swiss_prot.pl` 未动。`run_dat2fa_uniprot.pl`在原脚本基础上做出如下修改
 -  添加了`-f` 选项，即使结果文件已存在，仍然执行，使其覆盖。
