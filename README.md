@@ -211,14 +211,14 @@ Uniprot数据下目录 [Taxonomic divisions](https://ftp.uniprot.org/pub/databas
 
 #### 版本升级
 
-##### 2022.12.11 v0.3 【已转为非公开脚本】
+##### 2022.12.11 v0.3 【已转为非公开脚本，有需求需要付费】
 
 - 添加脚本`run_dat2fa_uniprot.pl` ，原`run_dat2fa_swiss_prot.pl` 未动。`run_dat2fa_uniprot.pl`在原脚本基础上做出如下修改
 -  添加了`-f` 选项，即使结果文件已存在，仍然执行，使其覆盖。
 - 对每条序列`ID`行添加检查`Reviewed/Unreviewed` （分别对应fasta结果文件序列ID行中的`sp/tr`），使其适用`swiss-prot`与`trembl`数据库`dat`文件转换。
 - 思考：每条序列都添加检查可能会使速度稍慢，这可能对于`trembl` 库的dat文件转换才比较明显。如何在指定数据库来源的同时减少内部判断增加的运行时间呢？分块编程重新写？太麻烦，暂时不改了。
 
-##### 2022.11.22 v0.2 【仍公开】
+##### 2022.11.22 v0.2 【已转为非公开脚本，有需求需要付费】
 
 - 将脚本名称由原来的`dat2fa_swiss_prot.pl` 改为了`run_dat2fa_swiss_prot.pl` 
 - 新增了fasta结果信息文件`.info` 。将fasta序列标题行信息整理成了tab分隔的文件，方便处理。不过得多说一句，`.info` 文件只是提取了部分`.dat` 文件信息。
