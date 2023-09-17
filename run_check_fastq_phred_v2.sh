@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-# 定义脚本的使用方法
+## ---------- 定义脚本的使用方法 ----------------------------------
 usage() {
 cat << EOF
 Usage: $0 -i <fastq.gz>
@@ -10,11 +10,13 @@ Options:
 	-i, --input Input file.
 	-o, --ouput Output file.
 	-n, --read_nums Number of reads to test [default: 2500].
+	-f, --force Force to rerun it.
 	-h, --help Print the tips.
 EOF
     exit 1
 }
 
+## ---------- 脚本选项设置 ----------------------------------
 OPTIONS=$(getopt -o hi:o::n:: --long help,input:,output::,read_nums:: -n "ERROR:$0" -- "$@")
 
 #if [ $? != 0]; then 
@@ -22,25 +24,28 @@ OPTIONS=$(getopt -o hi:o::n:: --long help,input:,output::,read_nums:: -n "ERROR:
 #	exit 1; 
 #fi
 
-if [ $? -ne 0 ]; then
+if [ $? -ne 0 ]; then 
 	usage && exit 1
 fi
 
 # Note the quotes around `$OPTIONS': they are essential!
 eval set -- "$OPTIONS"
 
-
-# 设置默认值
+## ---------- 设置默认值 ----------------------------------
 FILE1=""
 FILE2=""
 READ_NUMS=2500
-
-# 处理解析后的命令行参数
+FORCE=false
+## ---------- 处理解析后的命令行参数 ----------------------------------
 while true; do
   case "$1" in
     -h|--help)
       usage
       ;;
+	-f|--force)
+	  FORCE=true
+	  shift
+	  ;;
     -i|--input)
       FILE1="$2" # 赋值
       shift 2
@@ -64,19 +69,20 @@ while true; do
   esac
 done
 
+## ---------- 流程接续用文件 ----------------------------------
+<<EOF
 this_scirpt=$(readlink -f "$0")
-#echo "$this_scirpt"
+#echo "$this_scirpt" # 测试脚本所在位置。
 end_log="${this_scirpt}.end_log"
+EOF
+
+## ---------- 参数的处理 ----------------------------------
 num_lines=$((READ_NUMS * 4))
 
-#echo "hi $num_lines"
-## 定义函数
 
-### 获取前num_linesn行
+## ---------- 定义函数 ----------------------------------
+### 处理压缩文件
 function get_fq_lines(){ # $1 fastq.gz file; $2 number of lines of fastq
-
-	#echo $1 |grep -q '\.gz$'
-	#if [ $? -eq 0 ];then
 
 	if [[ "$1" =~ \.gz$ ]]; then
 		zcat "$1" |head -n "$2"
@@ -84,8 +90,8 @@ function get_fq_lines(){ # $1 fastq.gz file; $2 number of lines of fastq
 		cat "$1" |head -n "$2"
 	fi
 }
-#get_fq_lines "$FILE1" "$num_lines"
 
+#get_fq_lines "$FILE1" "$num_lines" # 简单测试下这个函数
 
 ### 检查fastq文件格式
 function check_fq (){ # $1 fastq.gz file; $2 number of lines of fastq
@@ -108,19 +114,23 @@ function check_fq (){ # $1 fastq.gz file; $2 number of lines of fastq
                      print file"\tSolexa+64"; else print file"\tUnknown score encoding!";}'
 }
 
-
-# 检查输入文件是否存在
+## ---------- 检查与运行 ----------------------------------
+## 检查输入文件是否存在
 if [ ! -f "$FILE1" ]; then
     echo "ERROR: $i not exits."
 	usage
     exit 1
 fi
 
-#echo -e "$FILE1\t$num_lines"
+#echo "---------- step 1 start: `date`----------------------------------"
 check_fq $FILE1 $num_lines  # check phred score
+#echo "---------- step 1 done: `date`----------------------------------"
 
-
+## ---------- 流程接续 ----------------------------------
 <<EOF
+
+if [[ $FORCE ]] ;then rm -rf $end_log; fi
+
 #[[ -f $end_log ]] || ( echo "$FILE1" && touch ${end_log} )
 
 if [[ ! -f $end_log ]] ;then
@@ -135,3 +145,5 @@ if [ $? -ne 0 ]; then
 		touch ${end_log}
 fi
 EOF
+
+#echo "---------- DONE: `date`----------------------------------"
