@@ -209,7 +209,7 @@ get_kegg_info <- function(ko_json){
     if(!dir.exists("./ko00001")){dir.create("ko00001")}
     
     if(!file.exists("./ko00001/ko00001.json")){ #必须force = TRUE 放在()中。| (force = TRUE)
-      mess
+      message("Downloading ko00001.json!")
       utils::download.file("https://www.genome.jp/kegg-bin/download_htext?htext=ko00001&format=json&filedir=",
                            destfile = "./ko00001/ko00001.json")
     }
